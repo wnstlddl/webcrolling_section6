@@ -34,7 +34,7 @@ class TestForm(QMainWindow):
         self.statusBar.showMessage(self.lineEdit.text())
 
     def lineEditEnter(self):
-        self.plainEdit.appendPlainText(self.lineEdit.text())
+        self.plainEdit.appendPlainText(self.lineEdit.text()) #insertPlainText
         self.lineEdit.clear()
 
 if __name__ =="__main__":
