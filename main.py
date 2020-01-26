@@ -61,8 +61,22 @@ class Main(QMainWindow, Ui_MainWindow):
             self.logineButton.setText("인증완료")
             self.logineButton.setEnabled(False)
             self.urlTextEdit.setFocus(True)
+            self.append_log_msg("Log in Success")
         else:
             QMessageBox.about(self,"인증오류","ID 또는 PW 오류")
+
+    def append_log_msg(self,act):
+        now = datetime.datetime.now()
+        nowDatetime = now.strftime("%Y-%m-%d %H:%M:%S")
+        app_msg = self.user_id + " : " + act + " -  (" + nowDatetime + ")"
+        print(app_msg)
+        self.plainTextEdit.appendPlainText(app_msg)
+
+        #로그 저장
+        with open("C:/python/webcrolling/section6/webcrolling_section6/log/log.txt",'a') as f:
+            f.write(app_msg + '\n')
+
+
 
 if __name__=="__main__":
     app = QApplication(sys.argv)
