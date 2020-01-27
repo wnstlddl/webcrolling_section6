@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../resource/title_ico.png</normaloff>../resource/title_ico.png</iconset>
+    <normaloff>C:/python_Webcroling/section6/resource/title_ico.png</normaloff>C:/python_Webcroling/section6/resource/title_ico.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
@@ -61,7 +61,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../resource/you_viewer_logo.png</pixmap>
+      <pixmap>C:/python_Webcroling/section6/you_viewer_logo.png</pixmap>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton">
