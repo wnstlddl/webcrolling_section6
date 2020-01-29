@@ -2,12 +2,14 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from PyQt5 import uic
-from PyQt5.QtCore import  pyqtSlot, pyqtSignal, QUrl
+from PyQt5.QtCore import  pyqtSlot, pyqtSignal, QUrl, QThread
 from lib.YouViewerLayout import Ui_MainWindow
 from lib.AuthDialog import AuthDialog
 import re
 import datetime
 import pytube
+from PyQt5.QtMultimedia import *
+from lib.IntroWorker import IntreWorker
 
 # form_class = uic.loadUiType("C:/python_Webcroling/section6/ui/you_viewer_v1.0.ui")[0]
 #cmd 창에 해당 루트 가서 이렇게 입력 pyuic5 -x you_viewer_v1.0.ui -o you_viewer_layout.py
@@ -29,6 +31,10 @@ class Main(QMainWindow, Ui_MainWindow):
         #유튜브 관련 작업
         self.youtb = None
         self.yoytbFileSize = 0
+        #배경음악  Thread 작업 선언
+        self.initIntroThread()
+        #Qthread 사용 안할 경우
+        # QSound.play("C:/python_Webcroling/section6/resource/intro.wav")
 
     # 기본 UI 비활성화
     def initAuthLock(self):
@@ -64,6 +70,27 @@ class Main(QMainWindow, Ui_MainWindow):
         self.fileNavButton.clicked.connect(self.selectDownPath)
         self.calendarWidget.clicked.connect(self.append_data)
         self.startButtom.clicked.connect(self.downloadYoutb)
+
+    #인트로 쓰레드 초기와 및 활성화
+    def initIntroThread(self):
+        #Worker 선언
+        self.introObj = IntreWorker()
+        #Qthread 선언
+        self.introThread = QThread()
+        #worker To thread 전환
+        self.introObj.moveToThread(self.introThread)
+        #시그널 연결
+        self.introObj.startMsg.connect(self.showIntroInfo)
+        #thread 시작 메소드 연결
+        self.introThread.started.connect(self.introObj.playBgm)
+        #thread 스타트
+        self.introThread.start()
+
+    #인트로 쓰레드 시그널 실해
+    def showIntroInfo(self,username, filename):
+        self.plainTextEdit.appendPlainText("Program Started by" + username)
+        self.plainTextEdit.appendPlainText("Playing intro infomation is")
+        self.plainTextEdit.appendPlainText(filename)
 
 
     @pyqtSlot()
